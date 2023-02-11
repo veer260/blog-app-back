@@ -25,6 +25,28 @@ class UserRepository {
       return existingUser;
     } catch (error) {}
   }
+
+  async getByEmail(dataEmail) {
+    try {
+      // console.log("inside repo layer");
+      const user = await User.findOne({
+        where: {
+          email: dataEmail,
+        },
+      });
+      // console.log("user:", user);
+      if (!user) {
+        // console.log("inside if");
+        throw {
+          error: "User hasn't registered yet!",
+        };
+      } else {
+        return user;
+      }
+    } catch (error) {
+      throw error;
+    }
+  }
 }
 
 module.exports = UserRepository;

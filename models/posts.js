@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       this.belongsTo(models.User, {
         foreignKey: "uid",
-        onDelete: "cascade",
+        onDelete: "CASCADE",
       });
     }
   }
@@ -26,14 +26,14 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       img: DataTypes.STRING,
+      category: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
       date: DataTypes.DATE,
       uid: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        references: {
-          model: "User",
-          id: "id",
-        },
       },
     },
     {

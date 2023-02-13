@@ -14,7 +14,9 @@ class UserService {
       const response = await this.userRepository.create(data);
       return response;
     } catch (error) {
-      throw error;
+      throw {
+        error: "cant create user",
+      };
     }
   }
 
@@ -49,6 +51,28 @@ class UserService {
       return { token, user };
     } catch (error) {
       console.log("inside error", error);
+      throw error;
+    }
+  }
+
+  async deleteUser(id) {
+    try {
+      console.log("inside service");
+      const response = await this.userRepository.deleteUser(id);
+      return response;
+    } catch (error) {
+      console.log("wrong in service layer");
+      throw error;
+    }
+  }
+
+  async getUser(id) {
+    try {
+      console.log("inside service");
+      const response = await this.userRepository.getUser(+id);
+      return response;
+    } catch (error) {
+      console.log("wrong in service layer");
       throw error;
     }
   }

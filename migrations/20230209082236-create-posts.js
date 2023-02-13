@@ -17,6 +17,9 @@ module.exports = {
         type: Sequelize.STRING(1000),
         allowNull: false,
       },
+      category: {
+        type: Sequelize.STRING,
+      },
       img: {
         type: Sequelize.STRING,
       },
@@ -25,6 +28,12 @@ module.exports = {
       },
       uid: {
         type: Sequelize.INTEGER,
+        onDelete: "CASCADE",
+        references: {
+          model: "users",
+          key: "id",
+          as: "uid",
+        },
       },
       createdAt: {
         allowNull: false,

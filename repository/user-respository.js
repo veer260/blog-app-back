@@ -3,6 +3,7 @@ class UserRepository {
   constructor() {}
   async create(data) {
     try {
+      console.log("repo layer");
       const existingUser = await this.checkExisting(data);
       if (existingUser) {
         throw {
@@ -15,6 +16,33 @@ class UserRepository {
       throw error;
     }
   }
+
+  async deleteUser(userId) {
+    try {
+      // console.log("inside repo", typeof postId);
+      const response = await User.destroy({
+        where: {
+          id: [userId],
+        },
+      });
+      return response;
+    } catch (error) {
+      console.log("wrong in repo layer");
+      throw error;
+    }
+  }
+
+  async getUser(userId) {
+    try {
+      // console.log("inside repo", typeof postId);
+      const response = await User.findByPk(userId);
+      return response;
+    } catch (error) {
+      console.log("wrong in repo layer");
+      throw error;
+    }
+  }
+
   async checkExisting(data) {
     try {
       const existingUser = await User.findOne({
@@ -23,7 +51,9 @@ class UserRepository {
         },
       });
       return existingUser;
-    } catch (error) {}
+    } catch (error) {
+      throw error;
+    }
   }
 
   async getByEmail(dataEmail) {
@@ -36,7 +66,6 @@ class UserRepository {
       });
       // console.log("user:", user);
       if (!user) {
-        // console.log("inside if");
         throw {
           error: "User hasn't registered yet!",
         };
@@ -44,7 +73,9 @@ class UserRepository {
         return user;
       }
     } catch (error) {
-      throw error;
+      throw {
+        error: "somethings wrong in repo layer",
+      };
     }
   }
 }
